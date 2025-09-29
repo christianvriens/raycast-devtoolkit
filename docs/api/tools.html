@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tool Reference &mdash; DevToolkit Python Tools 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Quick Start Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DevToolkit Python Tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tool Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#base64-tool">Base64 Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#url-tool">URL Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hash-tool">Hash Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jwt-tool">JWT Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#json-tool">JSON Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uuid-tool">UUID Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#epoch-tool">Epoch Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#color-tool">Color Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tool-configuration">Tool Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schema-generation">Schema Generation</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DevToolkit Python Tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tool Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tool-reference">
+<h1>Tool Reference<a class="headerlink" href="#tool-reference" title="Link to this heading"></a></h1>
+<p>This section provides detailed documentation for each tool, including input/output models, validation rules, and examples.</p>
+<section id="base64-tool">
+<h2>Base64 Tool<a class="headerlink" href="#base64-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: Base64Input</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code> (str): Text to encode or decode</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operation</span></code> (str): “encode” or “decode”</p></li>
+</ul>
+<p><strong>Output Model</strong>: Base64Output</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input</span></code> (str): Original input text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output</span></code> (str): Encoded or decoded result</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operation</span></code> (str): Operation performed</p></li>
+</ul>
+<p><strong>Examples</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Encoding</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="n">Base64Input</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;encode&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+<span class="c1"># result.output == &quot;aGVsbG8=&quot;</span>
+
+<span class="c1"># Decoding</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="n">Base64Input</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;aGVsbG8=&quot;</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;decode&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+<span class="c1"># result.output == &quot;hello&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="url-tool">
+<h2>URL Tool<a class="headerlink" href="#url-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: UrlInput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code> (str): Text to encode or decode</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operation</span></code> (str): “encode” or “decode”</p></li>
+</ul>
+<p><strong>Output Model</strong>: UrlOutput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input</span></code> (str): Original input text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output</span></code> (str): Encoded or decoded result</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operation</span></code> (str): Operation performed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_valid_url</span></code> (bool): Whether result is a valid URL</p></li>
+</ul>
+<p><strong>Validation</strong>:
+- Warns when decoding text without % characters
+- Validates URL format in results</p>
+</section>
+<section id="hash-tool">
+<h2>Hash Tool<a class="headerlink" href="#hash-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: HashInput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code> (str): Text to hash</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">algorithm</span></code> (str): Hash algorithm (md5, sha1, sha256, sha512)</p></li>
+</ul>
+<p><strong>Output Model</strong>: HashOutput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input</span></code> (str): Original input text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">algorithm</span></code> (str): Algorithm used</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hash</span></code> (str): Generated hash</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">length</span></code> (int): Hash length in characters</p></li>
+</ul>
+<p><strong>Algorithms</strong>:
+- <strong>MD5</strong>: 32 characters (deprecated for security)
+- <strong>SHA1</strong>: 40 characters (deprecated for security)
+- <strong>SHA256</strong>: 64 characters (recommended)
+- <strong>SHA512</strong>: 128 characters (high security)</p>
+</section>
+<section id="jwt-tool">
+<h2>JWT Tool<a class="headerlink" href="#jwt-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: JWTInput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code> (str): JWT token to decode</p></li>
+</ul>
+<p><strong>Output Model</strong>: JWTOutput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">header</span></code> (dict): JWT header</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">payload</span></code> (dict): JWT payload</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">signature</span></code> (str): JWT signature</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">issued_at</span></code> (int, optional): Issued timestamp</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expires_at</span></code> (int, optional): Expiration timestamp</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">issued_at_readable</span></code> (str, optional): Human-readable issued time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expires_at_readable</span></code> (str, optional): Human-readable expiration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_expired</span></code> (bool, optional): Whether token is expired</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">valid_format</span></code> (bool): Whether JWT format is valid</p></li>
+</ul>
+<p><strong>Features</strong>:
+- Decodes JWT header and payload
+- Analyzes expiration claims (exp, iat)
+- Provides human-readable timestamps
+- Validates JWT format</p>
+</section>
+<section id="json-tool">
+<h2>JSON Tool<a class="headerlink" href="#json-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: JSONInput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code> (str): JSON text to format or minify</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">minify</span></code> (bool): Whether to minify instead of format</p></li>
+</ul>
+<p><strong>Output Model</strong>: JSONOutput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">formatted</span></code> (str): Formatted or minified JSON</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">original</span></code> (str): Original input</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operation</span></code> (str): “format” or “minify”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">valid</span></code> (bool): Whether input was valid JSON</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size_before</span></code> (int): Size before processing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size_after</span></code> (int): Size after processing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parsed_data</span></code> (dict): Parsed JSON structure</p></li>
+</ul>
+<p><strong>Operations</strong>:
+- <strong>Format</strong>: Pretty-print with indentation and sorting
+- <strong>Minify</strong>: Remove whitespace and formatting</p>
+</section>
+<section id="uuid-tool">
+<h2>UUID Tool<a class="headerlink" href="#uuid-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: UUIDInput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> (int): UUID version (1 or 4), default 4</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code> (int): Number of UUIDs to generate (1-100), default 1</p></li>
+</ul>
+<p><strong>Output Model</strong>: UUIDOutput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uuids</span></code> (List[str]): Generated UUIDs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> (int): UUID version used</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code> (int): Number of UUIDs generated</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">format</span></code> (str): UUID format description</p></li>
+</ul>
+<p><strong>UUID Versions</strong>:
+- <strong>v1</strong>: Time-based, includes MAC address and timestamp
+- <strong>v4</strong>: Random, recommended for general use</p>
+</section>
+<section id="epoch-tool">
+<h2>Epoch Tool<a class="headerlink" href="#epoch-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: EpochInput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code> (str, optional): Epoch timestamp, empty for current time</p></li>
+</ul>
+<p><strong>Output Model</strong>: EpochOutput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">epoch</span></code> (int): Unix timestamp</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">utc</span></code> (dict): UTC time representations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">local</span></code> (dict): Local time representations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative</span></code> (dict): Relative time information</p></li>
+</ul>
+<p><strong>Time Formats</strong>:
+- <strong>readable</strong>: “2022-01-01 12:00:00 UTC”
+- <strong>iso</strong>: “2022-01-01T12:00:00+00:00”
+- <strong>ddmmyyyy</strong>: “01/01/2022 12:00:00”</p>
+<p><strong>Features</strong>:
+- Handles seconds and milliseconds
+- Provides multiple time formats
+- Calculates relative time differences
+- Supports timezone conversion</p>
+</section>
+<section id="color-tool">
+<h2>Color Tool<a class="headerlink" href="#color-tool" title="Link to this heading"></a></h2>
+<p><strong>Input Model</strong>: ColorInput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code> (str): Color value in any supported format</p></li>
+</ul>
+<p><strong>Output Model</strong>: ColorOutput</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_color</span></code> (str): Original input</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_format</span></code> (str): Detected format (hex, rgb, hsl)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hex</span></code> (str): Hexadecimal representation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rgb</span></code> (dict): RGB values {r, g, b}</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hsl</span></code> (dict): HSL values {h, s, l}</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">css_rgb</span></code> (str): CSS rgb() format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">css_hsl</span></code> (str): CSS hsl() format</p></li>
+</ul>
+<p><strong>Supported Formats</strong>:
+- <strong>HEX</strong>: #FF0000, #f00, FF0000
+- <strong>RGB</strong>: rgb(255, 0, 0)
+- <strong>HSL</strong>: hsl(0, 100%, 50%)</p>
+<p><strong>Validation</strong>:
+- Validates color format and values
+- Converts between all supported formats
+- Provides CSS-ready output</p>
+</section>
+<section id="tool-configuration">
+<h2>Tool Configuration<a class="headerlink" href="#tool-configuration" title="Link to this heading"></a></h2>
+<p>Each tool provides metadata through its configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>        <span class="c1"># Tool name</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">description</span><span class="p">)</span> <span class="c1"># Tool description</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>    <span class="c1"># Category (encoding, security, etc.)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>    <span class="c1"># Search keywords</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>     <span class="c1"># Tool version</span>
+</pre></div>
+</div>
+</section>
+<section id="schema-generation">
+<h2>Schema Generation<a class="headerlink" href="#schema-generation" title="Link to this heading"></a></h2>
+<p>All tools provide JSON schemas for their input/output models:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tool</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="s1">&#39;base64&#39;</span><span class="p">)</span>
+
+<span class="n">input_schema</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">get_input_schema</span><span class="p">()</span>
+<span class="n">output_schema</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">get_output_schema</span><span class="p">()</span>
+
+<span class="c1"># Schemas are standard JSON Schema format</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_schema</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output_schema</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, DevToolkit.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
