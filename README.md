@@ -2,7 +2,9 @@
 
 A powerful Raycast extension providing essential developer tools with a robust plugin architecture. Features 8 professional-grade utilities for encoding, security, text processing, and more.
 
-![DevToolkit](assets/extension-icon.png)
+<p align="center">
+    <img src="assets/extension-icon.png" alt="DevToolkit" width="120" />
+</p>
 
 ## ⚡ Quick Start
 
