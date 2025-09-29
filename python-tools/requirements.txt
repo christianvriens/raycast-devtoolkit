@@ -1,0 +1,10 @@
+# DevToolkit Python Tools Requirements
+# Core dependencies for the plugin system
+
+# Pydantic for data validation and serialization
+pydantic>=2.0.0,<3.0.0
+
+# Optional documentation dependencies
+# Install with: pip install -r requirements-docs.txt
+# sphinx>=4.0.0
+# sphinx_rtd_theme>=1.0.0

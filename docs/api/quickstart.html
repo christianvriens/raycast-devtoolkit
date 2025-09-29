@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Guide &mdash; DevToolkit Python Tools 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tool Reference" href="tools.html" />
+    <link rel="prev" title="DevToolkit Python Tools Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DevToolkit Python Tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-interface">Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tool-categories">Tool Categories</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples-by-tool">Examples by Tool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base64-tool">Base64 Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jwt-tool">JWT Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hash-tool">Hash Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#url-tool">URL Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-tool">JSON Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uuid-tool">UUID Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#epoch-tool">Epoch Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#color-tool">Color Tool</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#programming-interface">Programming Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-integration">Python Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-api">JSON API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tool Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DevToolkit Python Tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start-guide">
+<h1>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading"></a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>DevToolkit Python Tools requires Python 3.7+ and Pydantic:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Pydantic</span>
+pip<span class="w"> </span>install<span class="w"> </span>pydantic
+
+<span class="c1"># Clone or download the tools</span>
+git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
+<span class="nb">cd</span><span class="w"> </span>python-tools
+</pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<section id="command-line-interface">
+<h3>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Link to this heading"></a></h3>
+<p>The main interface is through <code class="docutils literal notranslate"><span class="pre">devtools.py</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all available tools</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>list
+
+<span class="c1"># Get detailed information about a tool</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>info<span class="w"> </span>base64
+
+<span class="c1"># Use a tool (legacy API)</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>base64<span class="w"> </span><span class="s2">&quot;hello world&quot;</span>
+
+<span class="c1"># Use a tool (modern plugin API)</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>run<span class="w"> </span>base64<span class="w"> </span><span class="s1">&#39;{&quot;text&quot;:&quot;hello&quot;,&quot;operation&quot;:&quot;encode&quot;}&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="tool-categories">
+<h3>Tool Categories<a class="headerlink" href="#tool-categories" title="Link to this heading"></a></h3>
+<p>Tools are organized into categories:</p>
+<ul class="simple">
+<li><p><strong>encoding</strong>: Base64, URL encoding/decoding</p></li>
+<li><p><strong>security</strong>: Hashing, JWT token analysis</p></li>
+<li><p><strong>text</strong>: JSON formatting, UUID generation</p></li>
+<li><p><strong>time</strong>: Timestamp conversion</p></li>
+<li><p><strong>design</strong>: Color format conversion</p></li>
+</ul>
+</section>
+</section>
+<section id="examples-by-tool">
+<h2>Examples by Tool<a class="headerlink" href="#examples-by-tool" title="Link to this heading"></a></h2>
+<section id="base64-tool">
+<h3>Base64 Tool<a class="headerlink" href="#base64-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Encode text</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>base64<span class="w"> </span><span class="s2">&quot;hello world&quot;</span>
+<span class="c1"># Output: {&quot;input&quot;: &quot;hello world&quot;, &quot;output&quot;: &quot;aGVsbG8gd29ybGQ=&quot;, &quot;operation&quot;: &quot;encode&quot;}</span>
+
+<span class="c1"># Decode Base64</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>base64<span class="w"> </span><span class="s2">&quot;aGVsbG8gd29ybGQ=&quot;</span><span class="w"> </span>--decode
+<span class="c1"># Output: {&quot;input&quot;: &quot;aGVsbG8gd29ybGQ=&quot;, &quot;output&quot;: &quot;hello world&quot;, &quot;operation&quot;: &quot;decode&quot;}</span>
+</pre></div>
+</div>
+</section>
+<section id="jwt-tool">
+<h3>JWT Tool<a class="headerlink" href="#jwt-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Decode JWT token</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>jwt<span class="w"> </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;</span>
+<span class="c1"># Output: Complete JWT analysis with header, payload, expiration info</span>
+</pre></div>
+</div>
+</section>
+<section id="hash-tool">
+<h3>Hash Tool<a class="headerlink" href="#hash-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate SHA256 hash (default)</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span><span class="nb">hash</span><span class="w"> </span><span class="s2">&quot;secret&quot;</span>
+
+<span class="c1"># Generate MD5 hash</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span><span class="nb">hash</span><span class="w"> </span><span class="s2">&quot;secret&quot;</span><span class="w"> </span>--algorithm<span class="w"> </span>md5
+
+<span class="c1"># All algorithms: md5, sha1, sha256, sha512</span>
+</pre></div>
+</div>
+</section>
+<section id="url-tool">
+<h3>URL Tool<a class="headerlink" href="#url-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL encode</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>url<span class="w"> </span><span class="s2">&quot;hello world&quot;</span>
+<span class="c1"># Output: {&quot;input&quot;: &quot;hello world&quot;, &quot;output&quot;: &quot;hello%20world&quot;, &quot;operation&quot;: &quot;encode&quot;, &quot;is_valid_url&quot;: false}</span>
+
+<span class="c1"># URL decode</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>url<span class="w"> </span><span class="s2">&quot;hello%20world&quot;</span><span class="w"> </span>--decode
+</pre></div>
+</div>
+</section>
+<section id="json-tool">
+<h3>JSON Tool<a class="headerlink" href="#json-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Format JSON</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>json<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;John&quot;,&quot;age&quot;:30}&#39;</span>
+
+<span class="c1"># Minify JSON</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>json<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: 30}&#39;</span><span class="w"> </span>--minify
+</pre></div>
+</div>
+</section>
+<section id="uuid-tool">
+<h3>UUID Tool<a class="headerlink" href="#uuid-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate single UUID v4</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>uuid
+
+<span class="c1"># Generate multiple UUIDs</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>uuid<span class="w"> </span>--count<span class="w"> </span><span class="m">5</span>
+
+<span class="c1"># Generate UUID v1</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>uuid<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+</section>
+<section id="epoch-tool">
+<h3>Epoch Tool<a class="headerlink" href="#epoch-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert current timestamp</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>epoch
+
+<span class="c1"># Convert specific timestamp</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>epoch<span class="w"> </span><span class="m">1640995200</span>
+
+<span class="c1"># Supports millisecond timestamps</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>epoch<span class="w"> </span><span class="m">1640995200000</span>
+</pre></div>
+</div>
+</section>
+<section id="color-tool">
+<h3>Color Tool<a class="headerlink" href="#color-tool" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert HEX color</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>color<span class="w"> </span><span class="s2">&quot;#ff0000&quot;</span>
+
+<span class="c1"># Convert RGB color</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>color<span class="w"> </span><span class="s2">&quot;rgb(255, 0, 0)&quot;</span>
+
+<span class="c1"># Convert HSL color</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>color<span class="w"> </span><span class="s2">&quot;hsl(0, 100%, 50%)&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="programming-interface">
+<h2>Programming Interface<a class="headerlink" href="#programming-interface" title="Link to this heading"></a></h2>
+<section id="python-integration">
+<h3>Python Integration<a class="headerlink" href="#python-integration" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core</span><span class="w"> </span><span class="kn">import</span> <span class="n">registry</span>
+
+<span class="c1"># Get a tool instance</span>
+<span class="n">base64_tool</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="s1">&#39;base64&#39;</span><span class="p">)</span>
+
+<span class="c1"># Validate and execute</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="n">base64_tool</span><span class="o">.</span><span class="n">validate_input</span><span class="p">({</span>
+    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;hello world&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;encode&quot;</span>
+<span class="p">})</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">base64_tool</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>  <span class="c1"># &quot;aGVsbG8gd29ybGQ=&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="json-api">
+<h3>JSON API<a class="headerlink" href="#json-api" title="Link to this heading"></a></h3>
+<p>All tools return structured JSON responses suitable for automation:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hello world&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aGVsbG8gd29ybGQ=&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;encode&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;valid&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h2>
+<p>Tools provide detailed error information:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Invalid input example</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>base64<span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="c1"># Error: Text cannot be empty</span>
+
+<span class="c1"># Invalid JSON example</span>
+python3<span class="w"> </span>devtools.py<span class="w"> </span>json<span class="w"> </span><span class="s2">&quot;invalid json&quot;</span>
+<span class="c1"># Error: Invalid JSON: Expecting value: line 1 column 1 (char 0)</span>
+</pre></div>
+</div>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
+<p>Run the comprehensive test suite:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run all tests</span>
+python3<span class="w"> </span>tests/run_all_tests.py
+
+<span class="c1"># Run specific tool tests</span>
+python3<span class="w"> </span>tests/test_base64_tool.py
+
+<span class="c1"># Test output example:</span>
+<span class="c1"># 🧪 Running DevToolkit Plugin Tests</span>
+<span class="c1"># ==================================================</span>
+<span class="c1"># test_encode_basic ... ok</span>
+<span class="c1"># test_decode_basic ... ok</span>
+<span class="c1"># ...</span>
+<span class="c1"># 🎉 All tests passed!</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="DevToolkit Python Tools Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tools.html" class="btn btn-neutral float-right" title="Tool Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, DevToolkit.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

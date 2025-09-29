@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../repositories/shm_mapper"
+		},
+		{
+			"path": "../../../../PycharmProjects/Prefect-Watchdog"
+		}
+	],
+	"settings": {}
+}
