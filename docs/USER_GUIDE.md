@@ -9,6 +9,17 @@ Complete guide to using all 8 developer tools in the DevToolkit extension.
 3. **Use**: Fill in the form and press Enter
 4. **Copy**: Results are automatically copied to your clipboard
 
+### Install from local code (developer)
+
+If you prefer to run DevToolkit from your local checkout (useful for development and testing), Raycast can load extensions from a local folder:
+
+- Open Raycast → Preferences (⌘ ,) → Extensions (or Developer settings).
+- Look for the option to add an "Application Directory" or a local extensions path.
+- Add/select the path where this repository is located (for example: `/path/to/devtoolkit`).
+- Restart Raycast or use Developer → Reload Extensions to pick up changes.
+
+Once added, Raycast will load the extension code from that directory so you can test changes without publishing to the store. The Python CLI tools in `python-tools/` will work from the same folder.
+
 ## 🛠 Tool Reference
 
 ### 🔤 Base64 Encode/Decode

@@ -11,6 +11,17 @@ A powerful Raycast extension providing essential developer tools with a robust p
 3. **Auto-Copy**: Results automatically copy to clipboard
 4. **CLI Access**: Python tools work standalone too!
 
+### Install from local code (developer)
+
+If you want to run this toolkit from your local copy (for development or testing), you can tell Raycast to load extensions from a local directory:
+
+- Open Raycast and go to Preferences (⌘ ,).
+- Find the Extensions / Developer settings and choose the option to add an "Application Directory" (or similar) for local extensions.
+- Select the folder where this repository is checked out (for example: `/path/to/devtoolkit`).
+- Raycast will load extensions found in that directory. You may need to restart Raycast or use the Developer → Reload Extensions command for changes to appear.
+
+This lets you iterate on TypeScript plugins locally and use the bundled Python tools from `python-tools/` without publishing the extension.
+
 ## 🛠 Available Tools
 
 | Tool | Description | Categories |
