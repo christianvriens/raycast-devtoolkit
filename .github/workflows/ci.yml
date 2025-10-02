@@ -38,7 +38,24 @@ jobs:
           pip install -r python-tools/requirements.txt
           pip install -r python-tools/requirements-dev.txt
           chmod +x python-tools/run.sh || true
-          ./python-tools/run.sh test
+          # Run pytest through the launcher but also produce junit xml for PR reporting
+          ./python-tools/run.sh test -- -vv --junitxml=python-tools/test-report.xml
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-test-report
+          path: python-tools/test-report.xml
+
+      - name: Publish test report annotations
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: python-tests
+          path: python-tools/test-report.xml
+          reporter: junit
+          fail-on-error: false
 
   node-tests:
     name: Node / TypeScript tests
