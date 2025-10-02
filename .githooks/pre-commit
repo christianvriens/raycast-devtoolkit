@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "Running test-suite before commit..."
+echo "Running test-suite before commit... (enable hooks with: chmod +x scripts/enable-local-githooks.sh && ./scripts/enable-local-githooks.sh)"
 
 # Prefer using the project launcher which creates an isolated venv
 if [ -x "./python-tools/run.sh" ]; then
