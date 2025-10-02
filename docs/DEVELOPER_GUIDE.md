@@ -385,6 +385,56 @@ if __name__ == "__main__":
 - [ ] Tests verify schema generation
 - [ ] All tests pass with 100% success rate
 
+### Verify locally (recommended)
+
+Before pushing changes or opening a PR, verify the code and tests locally. The project provides a launcher at `python-tools/run.sh` which creates an isolated venv under `python-tools/.venv` and installs runtime/dev dependencies.
+
+Quick commands (run from the repository root):
+
+```bash
+# Make the launcher executable (once per clone)
+chmod +x python-tools/run.sh
+
+# Run the full test suite (creates/uses python-tools/.venv)
+./python-tools/run.sh test
+
+# Show collected tests without running them (useful to confirm counts)
+./python-tools/run.sh test --collect-only -q
+
+# Run tests with verbose output and per-test reporting
+./python-tools/run.sh test -vv
+
+# Run a single test file or test case
+./python-tools/run.sh test python-tools/tests/test_json_tool.py
+./python-tools/run.sh test python-tools/tests/test_json_tool.py::TestJSONTool::test_json_formatting
+
+# Re-run the test suite and show extra summary info
+./python-tools/run.sh test -r a
+```
+
+IDE tips
+
+- VS Code
+  - Install the Python extension and set the interpreter to `python-tools/.venv/bin/python`.
+  - Use the Test Explorer view or CodeLens links to run tests from the editor.
+  - Alternatively run the launcher in the integrated terminal and inspect output.
+
+- PyCharm
+  - Add `python-tools/.venv` as a project interpreter (or configure a virtualenv for the project).
+  - Run tests from the test runner UI or the terminal using the launcher above.
+
+Notes
+
+- The launcher will install dev dependencies from `python-tools/requirements-dev.txt` when you run the `test` command.
+- If your environment blocks system installs (PEP-668 / externally-managed), prefer creating the venv manually and activating it before installing requirements.
+- To enable local pre-commit hooks that run tests before commits, run:
+
+```bash
+chmod +x scripts/enable-local-githooks.sh
+./scripts/enable-local-githooks.sh
+```
+
+
 ## 🎨 UI Patterns
 
 ### Form Components

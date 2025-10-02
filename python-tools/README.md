@@ -4,16 +4,20 @@ Standalone Python developer utilities with plugin architecture. These tools can 
 
 ## 🚀 Quick Start
 
+Use the provided launcher to create a venv, install dependencies, and run the CLI or tests.
+
 ```bash
-# List all available tools
-python3 devtools.py list
+# Make the launcher executable once
+chmod +x python-tools/run.sh
 
-# Get tool information
-python3 devtools.py info base64
+# List all available tools (creates python-tools/.venv on first run)
+./python-tools/run.sh list
 
-# Use tools directly
-python3 devtools.py base64 "hello world"
-python3 devtools.py jwt "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+# Run a specific tool
+./python-tools/run.sh base64 "hello world"
+
+# Run the test-suite (recommended before making changes)
+./python-tools/run.sh test
 ```
 
 ## 📋 Available Tools
@@ -34,7 +38,7 @@ python3 devtools.py jwt "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
 ### Base64 Tool
 ```bash
 # Encode text
-python3 devtools.py base64 "hello world"
+./python-tools/run.sh base64 "hello world"
 open docs/api/index.html
 
 # Decode base64
@@ -45,76 +49,76 @@ open python-tools/docs/_build/html/index.html
 ### JWT Tool
 ```bash
 # Decode JWT token
-python3 devtools.py jwt "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+./python-tools/run.sh jwt "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 # Output: Complete JWT analysis with header, payload, and validation info
 ```
 
 ### Hash Tool
 ```bash
 # Generate SHA256 hash (default)
-python3 devtools.py hash "secret"
+./python-tools/run.sh hash "secret"
 
 # Generate MD5 hash
-python3 devtools.py hash "secret" --algorithm md5
+./python-tools/run.sh hash "secret" --algorithm md5
 
 # Generate SHA512 hash
-python3 devtools.py hash "secret" --algorithm sha512
+./python-tools/run.sh hash "secret" --algorithm sha512
 ```
 
 ### URL Tool
 ```bash
 # URL encode
-python3 devtools.py url "hello world"
+./python-tools/run.sh url "hello world"
 # Output: {"input": "hello world", "output": "hello%20world", "operation": "encode", "is_valid_url": false}
 
 # URL decode
-python3 devtools.py url "hello%20world" --decode
+./python-tools/run.sh url "hello%20world" --decode
 # Output: {"input": "hello%20world", "output": "hello world", "operation": "decode", "is_valid_url": false}
 ```
 
 ### JSON Tool
 ```bash
 # Format JSON
-python3 devtools.py json '{"name":"John","age":30}'
+./python-tools/run.sh json '{"name":"John","age":30}'
 
 # Minify JSON
-python3 devtools.py json '{"name": "John", "age": 30}' --minify
+./python-tools/run.sh json '{"name": "John", "age": 30}' --minify
 ```
 
 ### UUID Tool
 ```bash
 # Generate UUID v4 (default)
-python3 devtools.py uuid
+./python-tools/run.sh uuid
 
 # Generate 5 UUID v4s
-python3 devtools.py uuid --count 5
+./python-tools/run.sh uuid --count 5
 
 # Generate UUID v1
-python3 devtools.py uuid --version 1
+./python-tools/run.sh uuid --version 1
 ```
 
 ### Epoch Tool
 ```bash
 # Convert current time
-python3 devtools.py epoch
+./python-tools/run.sh epoch
 
 # Convert specific timestamp
-python3 devtools.py epoch 1577836800
+./python-tools/run.sh epoch 1577836800
 
 # Convert millisecond timestamp
-python3 devtools.py epoch 1577836800000
+./python-tools/run.sh epoch 1577836800000
 ```
 
 ### Color Tool
 ```bash
 # Convert hex color
-python3 devtools.py color "#ff0000"
+./python-tools/run.sh color "#ff0000"
 
 # Convert RGB color
-python3 devtools.py color "rgb(255, 0, 0)"
+./python-tools/run.sh color "rgb(255, 0, 0)"
 
 # Convert HSL color
-python3 devtools.py color "hsl(0, 100%, 50%)"
+./python-tools/run.sh color "hsl(0, 100%, 50%)"
 ```
 
 ## 🏗 Plugin Architecture
@@ -189,6 +193,21 @@ registry.register_tool(MyTool, 'my_tool')
 
 ## 🧪 Testing
 
+This project separates runtime dependencies from development/test dependencies.
+
+- `requirements.txt` contains runtime packages needed by the CLI (e.g. `pydantic`).
+- `requirements-dev.txt` contains developer/test tools (`pytest`, `sphinx`, etc.).
+
+Use the launcher to create a venv and run tests; it will automatically install `requirements-dev.txt` when you run the `test` subcommand.
+
+```bash
+# Create venv (if needed) and run tests
+chmod +x python-tools/run.sh
+./python-tools/run.sh test
+```
+
+Running `./python-tools/run.sh list` will only install runtime dependencies.
+
 ### Run All Tests
 ```bash
 python3 tests/run_all_tests.py
@@ -208,6 +227,19 @@ python3 tests/test_hash_tool.py
 - **Validation testing** (Pydantic models)
 - **Schema generation** testing
 - **Roundtrip testing** (encode/decode consistency)
+
+## 🧪 Verify locally (quick check)
+
+Before pushing changes or opening a PR, run the following from the repo root to validate the python tools:
+
+```bash
+chmod +x python-tools/run.sh
+./python-tools/run.sh test            # run full test-suite
+./python-tools/run.sh test --collect-only -q  # show collected tests
+./python-tools/run.sh test -vv        # verbose test output
+```
+
+See `docs/DEVELOPER_GUIDE.md` → "Verify locally" for more details and IDE tips.
 
 ## 🔧 Advanced Usage
 
