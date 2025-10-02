@@ -14,6 +14,12 @@ dist/
 python-tools/docs/_build/
 docs/api/_build/
 
+# Test artifacts and logs
+python-tools/logs/
+python-tools/test-report*.xml
+python-tools/test-report.xml
+python-tools/test-report-ci.xml
+
 # Node
 node_modules/
 npm-debug.log
@@ -48,3 +54,15 @@ compiled_raycast_rust
 
 # Local Python virtualenv for python-tools
 python-tools/.venv/
+
+# Bytecode caches
+**/__pycache__/
+*.py[cod]
+*.pyc
+
+# Explicit ignores for python-tools plugin bytecode
+python-tools/plugins/__pycache__/
+python-tools/plugins/*.py[cod]
+python-tools/plugins/*.pyc
+
+

@@ -4,27 +4,48 @@ Defines the foundation for all DevToolkit plugins
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Type, Union, get_type_hints
+from typing import Any, Dict, List, Optional, Type, Union, get_type_hints, cast
 from pydantic import BaseModel, Field
+
+# Pydantic v2 ConfigDict availability check
+_HAS_CONFIGDICT = False
+try:
+    # We test for availability but avoid calling ConfigDict at module import time
+    # to prevent static analysis (Pylance) from complaining about optional calls.
+    from pydantic import ConfigDict  # type: ignore
+    _HAS_CONFIGDICT = True
+except Exception:
+    # ConfigDict not available (older pydantic). We'll use the class-based Config fallback.
+    _HAS_CONFIGDICT = False
 import json
+
+# Default model_config values (plain dicts are acceptable to Pydantic v2)
+_DEFAULT_INPUT_MODEL_CONFIG = {"extra": "allow"}
+_DEFAULT_OUTPUT_MODEL_CONFIG = {"json_encoders": {}}
 
 
 class ToolInput(BaseModel):
     """Base class for tool input validation"""
-    
-    class Config:
-        # Allow extra fields for flexibility
-        extra = "allow"
+    # Pydantic v2 configuration (set at definition time). Use plain dict to avoid
+    # calling ConfigDict (which some static checkers treat as optional).
+    if _HAS_CONFIGDICT:
+        # Cast to ConfigDict for static type-checkers while keeping a plain dict at runtime
+        model_config = cast("ConfigDict", _DEFAULT_INPUT_MODEL_CONFIG)
+    else:
+        class Config:
+            extra = "allow"
 
 
 class ToolOutput(BaseModel):
     """Base class for tool output structure"""
-    
-    class Config:
-        # Ensure consistent JSON serialization
-        json_encoders = {
-            # Add custom encoders if needed
-        }
+    # Pydantic v2 configuration for JSON encoders
+    if _HAS_CONFIGDICT:
+        model_config = cast("ConfigDict", _DEFAULT_OUTPUT_MODEL_CONFIG)
+    else:
+        class Config:
+            json_encoders = {
+                # Add custom encoders if needed
+            }
 
 
 class ToolConfig(BaseModel):
@@ -105,7 +126,7 @@ class ToolRegistry:
     def __init__(self):
         self._tools: Dict[str, Type[BaseTool]] = {}
     
-    def register_tool(self, cls: Type[BaseTool], name: str = None) -> None:
+    def register_tool(self, cls: Type[BaseTool], name: Optional[str] = None) -> None:
         """Register a tool class"""
         if name is None:
             name = cls.__name__.lower().replace('tool', '')

@@ -18,3 +18,5 @@ If you prefer not to use local hooks, run the test-suite manually:
 ```bash
 ./python-tools/run.sh test
 ```
+
+Reminder: run `scripts/enable-local-githooks.sh` once on your machine to enable the pre-commit test hook (see `scripts/README.md` for details).

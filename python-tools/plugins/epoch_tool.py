@@ -6,7 +6,7 @@ Converts epoch timestamps to human-readable formats and vice versa
 import time
 from datetime import datetime, timezone
 from typing import Type, Dict, Any, Optional
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from core.base import BaseTool, ToolInput, ToolOutput, ToolConfig, registry
 
@@ -15,7 +15,7 @@ class EpochInput(ToolInput):
     """Input model for epoch conversion"""
     timestamp: Optional[str] = Field(default=None, description="Epoch timestamp (leave empty for current time)")
     
-    @validator('timestamp', pre=True, always=True)
+    @field_validator('timestamp', mode='before')
     def validate_timestamp(cls, v):
         if v is None or v == "":
             return None

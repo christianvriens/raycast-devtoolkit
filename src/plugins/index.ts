@@ -12,6 +12,7 @@ import { JWTPlugin } from "./security/jwt";
 import { HashPlugin } from "./security/hash";
 import { UuidPlugin } from "./text/uuid";
 import { JsonPlugin } from "./text/json";
+import { EscapePlugin } from "./text/escape";
 import { TimestampPlugin } from "./time/timestamp";
 
 // Plugin registration function
@@ -30,6 +31,7 @@ export function registerAllPlugins() {
     // Register text/data plugins
     PluginRegistry.registerPlugin(UuidPlugin);
     PluginRegistry.registerPlugin(JsonPlugin);
+  PluginRegistry.registerPlugin(EscapePlugin);
     
     // Register time plugins
     PluginRegistry.registerPlugin(TimestampPlugin);

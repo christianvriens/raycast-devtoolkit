@@ -54,7 +54,7 @@ function UuidGenerator() {
         <Form.TextArea
           id="result"
           title="Generated UUIDs"
-          value={result}
+          defaultValue={result}
         />
       )}
     </BaseForm>

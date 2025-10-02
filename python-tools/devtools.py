@@ -89,7 +89,7 @@ Examples:
     run_parser.add_argument('tool', help='Tool name')
     run_parser.add_argument('input', help='Input data as JSON string')
     
-        # Legacy commands
+    # Legacy commands
     legacy_parser = subparsers.add_parser('base64', help='Base64 encode/decode (legacy)')
     legacy_parser.add_argument('text', help='Text to encode/decode')
     legacy_parser.add_argument('--decode', action='store_true', help='Decode instead of encode')
@@ -170,8 +170,16 @@ Examples:
             }
             result = execute_tool_command('jwt', input_data)
         elif args.command == 'json':
+            # If caller passes '-' as the text argument, read the JSON payload from stdin.
+            text_value = args.text
+            if text_value == '-':
+                try:
+                    text_value = sys.stdin.read()
+                except Exception:
+                    raise ValueError("Failed to read JSON from stdin")
+
             input_data = {
-                "text": args.text,
+                "text": text_value,
                 "minify": args.minify
             }
             result = execute_tool_command('json', input_data)

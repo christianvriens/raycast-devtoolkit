@@ -16,7 +16,8 @@ function getPythonToolsPath(): string {
   const possiblePaths = [
     path.join(__dirname, "..", "assets", "devtools.py"),  // Bundled with extension
     path.join(__dirname, "..", "python-tools", "devtools.py"),  // Development
-    "***REMOVED***/Documents/raycast/devtoolkit/python-tools/devtools.py"  // Absolute fallback
+  // Avoid hard-coded absolute paths; prefer bundled or workspace-relative dev copy
+  // If you need an explicit local path for debugging, use environment variables or `${process.env.HOME}`
   ];
   
   for (const scriptPath of possiblePaths) {
@@ -118,26 +119,64 @@ class PythonToolsError extends Error {
  * Execute Python tool command
  */
 async function executePythonTool(command: string, args: string[] = []): Promise<any> {
-  try {
-    const fullCommand = `python3 "${PYTHON_TOOLS_PATH}" ${command} ${args.map(arg => `"${arg}"`).join(" ")}`;
-    console.log(`Executing: ${fullCommand}`); // Debug log
-    
-    const { stdout, stderr } = await execAsync(fullCommand);
-    
-    if (stderr) {
-      console.error(`Python tool stderr: ${stderr}`); // Debug log
-      throw new PythonToolsError(stderr.trim());
+  // Prefer a project-local virtualenv if present (created by python-tools/run.sh)
+  const venvPython = path.join(path.dirname(PYTHON_TOOLS_PATH), ".venv", "bin", "python");
+  const pythonCandidates = [venvPython, "python3", "python", "/usr/bin/python3"];
+  const attempts: Array<{bin: string; error?: any; stdout?: string; stderr?: string}> = [];
+
+  for (const bin of pythonCandidates) {
+    const fullCommand = `${bin} "${PYTHON_TOOLS_PATH}" ${command} ${args.map(arg => `"${arg}"`).join(" ")}`;
+    console.log(`Attempting to execute: ${fullCommand}`);
+
+    try {
+      const { stdout, stderr } = await execAsync(fullCommand);
+
+      // If Python wrote to stderr, capture it and treat as an error (it may contain a traceback)
+      if (stderr && stderr.trim().length > 0) {
+        const msg = `Python tool wrote to stderr using ${bin}: ${stderr.trim()}`;
+        // write a log and throw
+        const logsDir = path.join(path.dirname(PYTHON_TOOLS_PATH), "logs");
+        try { fs.mkdirSync(logsDir, { recursive: true }); } catch (e) { /* best-effort */ }
+        const logFile = path.join(logsDir, `python-tool-${Date.now()}.log`);
+        const content = [
+          `COMMAND: ${fullCommand}`,
+          `STDOUT:\n${stdout || ""}`,
+          `STDERR:\n${stderr}`,
+        ].join("\n\n");
+        try { fs.writeFileSync(logFile, content, { encoding: "utf8" }); } catch (e) { console.error("Failed to write python tool log:", e); }
+
+        throw new PythonToolsError(`${msg}. See log: ${logFile}`);
+      }
+
+      // Success path: parse stdout
+      console.log(`Python tool stdout (from ${bin}): ${stdout}`);
+      return JSON.parse(stdout);
+    } catch (err: any) {
+      // Record attempt details for later reporting
+      attempts.push({ bin, error: err, stdout: err && err.stdout, stderr: err && err.stderr });
+      console.error(`Execution with ${bin} failed:`, err && (err.message || err));
+      // Try next candidate
     }
-    
-    console.log(`Python tool stdout: ${stdout}`); // Debug log
-    return JSON.parse(stdout);
-  } catch (error) {
-    console.error(`Python tool error: ${error}`); // Debug log
-    if (error instanceof SyntaxError) {
-      throw new PythonToolsError(`Invalid JSON response from Python tool: ${error.message}`);
-    }
-    throw error;
   }
+
+  // If we reach here, all attempts failed. Write a consolidated log with details to help debugging.
+  const logsDir = path.join(path.dirname(PYTHON_TOOLS_PATH), "logs");
+  try { fs.mkdirSync(logsDir, { recursive: true }); } catch (e) { /* best-effort */ }
+  const logFile = path.join(logsDir, `python-tool-failed-${Date.now()}.log`);
+  const parts: string[] = [];
+  parts.push(`All python execution attempts failed when running: ${command} ${args.join(" ")}`);
+  parts.push(`Tried candidates: ${pythonCandidates.join(", ")}`);
+  for (const a of attempts) {
+    parts.push(`--- ATTEMPT: ${a.bin} ---`);
+    parts.push(`ERROR: ${a.error && (a.error.message || String(a.error))}`);
+    parts.push(`STDOUT:\n${a.stdout || ""}`);
+    parts.push(`STDERR:\n${a.stderr || ""}`);
+  }
+  const logContent = parts.join("\n\n");
+  try { fs.writeFileSync(logFile, logContent, { encoding: "utf8" }); } catch (e) { console.error("Failed to write consolidated python tool log:", e); }
+
+  // Throw a helpful error that Raycast will show; include path to the log for full traceback
+  throw new PythonToolsError(`Failed to execute Python tool (tried python3/python). See detailed log: ${logFile}`);
 }
 
 /**

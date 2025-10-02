@@ -26,6 +26,8 @@ function Base64Converter() {
     }
   );
 
+  const resultKey = result ? result.slice(0, 8) : undefined;
+
   return (
     <BaseForm
       title="Base64 Converter"
@@ -45,16 +47,16 @@ function Base64Converter() {
       </Form.Dropdown>
       {result && (
         <Form.TextArea
-          id="result"
+          id={`result-${resultKey}`}
           title="Result"
-          value={result}
+          key={resultKey}
+          defaultValue={result}
         />
       )}
     </BaseForm>
   );
 }
 
-// Plugin Definition
 export const Base64Plugin: PluginDefinition = {
   id: "base64-plugin",
   name: "Base64 Tools",

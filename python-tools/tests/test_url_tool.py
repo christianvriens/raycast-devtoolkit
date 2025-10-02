@@ -77,7 +77,7 @@ class TestUrlTool(unittest.TestCase):
     def test_invalid_operation(self):
         """Test handling invalid operation"""
         with self.assertRaises(Exception):
-            UrlInput(text="test", operation="invalid")
+            UrlInput(text="test", operation="invalid")  # type: ignore[arg-type]
     
     def test_unicode_handling(self):
         """Test Unicode character handling"""

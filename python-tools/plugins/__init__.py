@@ -12,6 +12,7 @@ from . import json_tool
 from . import uuid_tool
 from . import epoch_tool
 from . import color_tool
+from . import escape_tool
 
 __all__ = [
     'base64_tool',
@@ -22,4 +23,5 @@ __all__ = [
     'uuid_tool',
     'epoch_tool',
     'color_tool',
+    'escape_tool',
 ]
