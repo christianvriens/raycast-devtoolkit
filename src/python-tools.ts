@@ -16,7 +16,8 @@ function getPythonToolsPath(): string {
   const possiblePaths = [
     path.join(__dirname, "..", "assets", "devtools.py"),  // Bundled with extension
     path.join(__dirname, "..", "python-tools", "devtools.py"),  // Development
-    // Avoid hard-coded absolute paths; prefer bundled or workspace-relative dev copy
+  // Avoid hard-coded absolute paths; prefer bundled or workspace-relative dev copy
+  // If you need an explicit local path for debugging, use environment variables or `${process.env.HOME}`
   ];
   
   for (const scriptPath of possiblePaths) {

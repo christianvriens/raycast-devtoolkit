@@ -222,7 +222,7 @@ function ExampleTool() {
         <Form.TextArea
           id="result"
           title="Result"
-          value={result}
+          defaultValue={result}
         />
       )}
     </BaseForm>

@@ -69,9 +69,10 @@ function UrlConverter() {
       )}
       {result && (
         <Form.TextArea
-          id="result"
+          id={`result-${result ? result.slice(0,8) : ''}`}
           title="Result"
-          value={result}
+          key={result ? result.slice(0,8) : undefined}
+          defaultValue={result}
         />
       )}
     </BaseForm>

@@ -64,6 +64,27 @@ class TestJSONTool(unittest.TestCase):
         self.assertTrue(len(result.formatted) < len(formatted_json))  # Minified is shorter
         self.assertNotIn("\n", result.formatted)  # No newlines in minified
         self.assertNotIn("  ", result.formatted)  # No double spaces
+
+    def test_json_minify_with_html_value(self):
+        """Ensure JSON minify works when a value contains HTML with quotes and braces"""
+        complex_value = (
+            'U searched for <span class="sqr-underline sqr-italic">{{old}}</span>, '
+            "but we didn't find any results. U searched for "
+            '<span class="sqr-underline sqr-italic">{{new}}</span>, we found {{count}} result.'
+        )
+        # Build a JSON object containing that string as a value
+        obj = {"spellcheck_results_one": complex_value}
+        input_text = json.dumps(obj, ensure_ascii=False)
+
+        input_data = JSONInput(text=input_text, minify=True)
+        result = self.tool.execute(input_data)
+
+        self.assertEqual(result.operation, "minify")
+        self.assertTrue(result.valid)
+        # minified result should parse back to the same structure
+        parsed = json.loads(result.formatted)
+        self.assertIn("spellcheck_results_one", parsed)
+        self.assertEqual(parsed["spellcheck_results_one"], complex_value)
     
     def test_invalid_json(self):
         """Test handling invalid JSON"""

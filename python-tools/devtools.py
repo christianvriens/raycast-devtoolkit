@@ -170,8 +170,16 @@ Examples:
             }
             result = execute_tool_command('jwt', input_data)
         elif args.command == 'json':
+            # If caller passes '-' as the text argument, read the JSON payload from stdin.
+            text_value = args.text
+            if text_value == '-':
+                try:
+                    text_value = sys.stdin.read()
+                except Exception:
+                    raise ValueError("Failed to read JSON from stdin")
+
             input_data = {
-                "text": args.text,
+                "text": text_value,
                 "minify": args.minify
             }
             result = execute_tool_command('json', input_data)

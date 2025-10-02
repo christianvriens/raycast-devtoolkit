@@ -24,11 +24,13 @@ function JsonFormatter() {
       return jsonResult;
     },
     {
-      extractResult: (data) => data.output || "",
+      extractResult: (data) => (data && (data.formatted || data.output || data.output_text)) || "",
       getSuccessMessage: (values) => 
         `${values.operation === "minify" ? "Minified" : "Formatted"} JSON copied`,
     }
   );
+
+  const resultKey = result ? result.slice(0, 8) : undefined;
 
   return (
     <BaseForm
@@ -49,11 +51,12 @@ function JsonFormatter() {
         <Form.Dropdown.Item value="minify" title="Minify" />
       </Form.Dropdown>
       {result && (
-        <Form.TextArea
-          id="result"
-          title="Result"
-          value={result}
-        />
+          <Form.TextArea
+            id={`result-${resultKey}`}
+            title="Result"
+            key={resultKey}
+            defaultValue={result}
+          />
       )}
     </BaseForm>
   );

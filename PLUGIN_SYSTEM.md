@@ -72,9 +72,13 @@ function YourTool() {
         <Form.TextArea
           id="result"
           title="Result"
-          value={result}
+          defaultValue={result}
         />
       )}
+
+      <!-- Note: prefer `defaultValue` for Form fields to avoid read-only controlled inputs. If you need
+           the field to re-initialize when `result` changes, include a dynamic id/key derived from the result
+           (for example `id={`result-${result.slice(0,8)}`}`) so the component remounts with the new default. -->
     </BaseForm>
   );
 }

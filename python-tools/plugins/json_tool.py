@@ -14,6 +14,7 @@ class JSONInput(ToolInput):
     """Input model for JSON formatting"""
     text: str = Field(description="JSON text to format or minify")
     minify: bool = Field(default=False, description="Whether to minify instead of format")
+    auto_unescape: bool = Field(default=True, description="Automatically unescape common encodings (html/json/xml/js) before parsing")
     
     @field_validator('text')
     def text_must_not_be_empty(cls, v):
@@ -54,29 +55,45 @@ class JSONTool(BaseTool):
         """Format or minify JSON"""
         text = input_data.text
         operation = "minify" if input_data.minify else "format"
-        
+        # Try parsing JSON first.
+        parse_text = text
         try:
-            # Parse JSON to validate
-            parsed_data = json.loads(text)
-            
-            # Format or minify
-            if input_data.minify:
-                formatted = json.dumps(parsed_data, separators=(',', ':'), ensure_ascii=False)
+            parsed_data = json.loads(parse_text)
+        except json.JSONDecodeError:
+            # If parsing failed, optionally try a best-effort auto-unescape and parse again
+            if input_data.auto_unescape:
+                try:
+                    from .escape_tool import EscapeTool
+                    et = EscapeTool()
+                    html_out = et.run({"text": parse_text, "operation": "unescape", "format": "html"})
+                    parse_text = html_out.get("output_text", parse_text)
+                    js_out = et.run({"text": parse_text, "operation": "unescape", "format": "javascript"})
+                    parse_text = js_out.get("output_text", parse_text)
+                except Exception:
+                    # best-effort: if unescape fails, continue to raise parse error below
+                    pass
+                try:
+                    parsed_data = json.loads(parse_text)
+                except json.JSONDecodeError as e:
+                    raise ValueError(f"Invalid JSON after auto-unescape: {e}")
             else:
-                formatted = json.dumps(parsed_data, indent=2, ensure_ascii=False, sort_keys=True)
-            
-            return JSONOutput(
-                formatted=formatted,
-                original=text,
-                operation=operation,
-                valid=True,
-                size_before=len(text),
-                size_after=len(formatted),
-                parsed_data=parsed_data
-            )
-            
-        except json.JSONDecodeError as e:
-            raise ValueError(f"Invalid JSON: {e}")
+                raise ValueError("Invalid JSON: could not parse input")
+
+        # Format or minify
+        if input_data.minify:
+            formatted = json.dumps(parsed_data, separators=(',', ':'), ensure_ascii=False)
+        else:
+            formatted = json.dumps(parsed_data, indent=2, ensure_ascii=False, sort_keys=True)
+
+        return JSONOutput(
+            formatted=formatted,
+            original=parse_text,
+            operation=operation,
+            valid=True,
+            size_before=len(parse_text),
+            size_after=len(formatted),
+            parsed_data=parsed_data
+        )
 
 
 # Register the tool

@@ -225,7 +225,7 @@ function Base64Converter() {
         <Form.TextArea
           id="result"
           title="Result"
-          value={result}
+          defaultValue={result}
         />
       )}
     </Form>
@@ -285,7 +285,7 @@ function UrlConverter() {
         <Form.TextArea
           id="result"
           title="Result"
-          value={result}
+          defaultValue={result}
         />
       )}
     </Form>
@@ -392,7 +392,7 @@ function HashGenerator() {
         <Form.TextField
           id="result"
           title="Hash"
-          value={result}
+          defaultValue={result}
         />
       )}
     </Form>
@@ -456,7 +456,7 @@ function JsonFormatter() {
         <Form.TextArea
           id="result"
           title="Result"
-          value={result}
+          defaultValue={result}
         />
       )}
     </Form>
@@ -521,7 +521,7 @@ function UuidGenerator() {
         <Form.TextArea
           id="result"
           title="Generated UUIDs"
-          value={result}
+          defaultValue={result}
         />
       )}
     </Form>

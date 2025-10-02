@@ -47,9 +47,10 @@ function HashGenerator() {
       </Form.Dropdown>
       {result && (
         <Form.TextField
-          id="result"
+          id={`result-${result ? result.slice(0,8) : ''}`}
           title="Hash"
-          value={result}
+          key={result ? result.slice(0,8) : undefined}
+          defaultValue={result}
         />
       )}
     </BaseForm>
