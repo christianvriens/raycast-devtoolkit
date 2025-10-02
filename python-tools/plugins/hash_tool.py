@@ -5,7 +5,7 @@ Provides cryptographic hash generation functionality
 
 import hashlib
 from typing import Type, Literal
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 from core import BaseTool, ToolInput, ToolOutput, ToolConfig
 
 
@@ -17,7 +17,7 @@ class HashInput(ToolInput):
         description="Hash algorithm to use"
     )
     
-    @validator('text')
+    @field_validator('text')
     def text_not_empty(cls, v):
         if not v.strip():
             raise ValueError("Text cannot be empty")

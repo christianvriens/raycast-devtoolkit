@@ -5,7 +5,7 @@ Converts between different color formats (HEX, RGB, HSL, etc.)
 
 import re
 from typing import Type, Dict, Any, Tuple
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from core.base import BaseTool, ToolInput, ToolOutput, ToolConfig, registry
 
@@ -14,7 +14,7 @@ class ColorInput(ToolInput):
     """Input model for color conversion"""
     color: str = Field(description="Color value in any supported format")
     
-    @validator('color')
+    @field_validator('color')
     def color_must_not_be_empty(cls, v):
         if not v or not v.strip():
             raise ValueError("Color value cannot be empty")

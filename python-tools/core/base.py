@@ -6,25 +6,39 @@ Defines the foundation for all DevToolkit plugins
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Type, Union, get_type_hints
 from pydantic import BaseModel, Field
+
+# Pydantic v2 ConfigDict availability check
+try:
+    from pydantic import ConfigDict
+    _HAS_CONFIGDICT = True
+except Exception:
+    ConfigDict = None
+    _HAS_CONFIGDICT = False
 import json
 
 
 class ToolInput(BaseModel):
     """Base class for tool input validation"""
-    
-    class Config:
-        # Allow extra fields for flexibility
-        extra = "allow"
+    # Pydantic v2 configuration (set at definition time)
+    if _HAS_CONFIGDICT:
+        model_config = ConfigDict(extra="allow")
+    else:
+        class Config:
+            extra = "allow"
 
 
 class ToolOutput(BaseModel):
     """Base class for tool output structure"""
-    
-    class Config:
-        # Ensure consistent JSON serialization
-        json_encoders = {
+    # Pydantic v2 configuration for JSON encoders
+    if _HAS_CONFIGDICT:
+        model_config = ConfigDict(json_encoders={
             # Add custom encoders if needed
-        }
+        })
+    else:
+        class Config:
+            json_encoders = {
+                # Add custom encoders if needed
+            }
 
 
 class ToolConfig(BaseModel):

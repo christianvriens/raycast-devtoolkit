@@ -5,7 +5,7 @@ Formats, validates, and minifies JSON strings
 
 import json
 from typing import Type, Any, Dict
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from core.base import BaseTool, ToolInput, ToolOutput, ToolConfig, registry
 
@@ -15,7 +15,7 @@ class JSONInput(ToolInput):
     text: str = Field(description="JSON text to format or minify")
     minify: bool = Field(default=False, description="Whether to minify instead of format")
     
-    @validator('text')
+    @field_validator('text')
     def text_must_not_be_empty(cls, v):
         if not v or not v.strip():
             raise ValueError("JSON text cannot be empty")

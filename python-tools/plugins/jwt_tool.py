@@ -7,7 +7,7 @@ import json
 import base64
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional, Type
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from core.base import BaseTool, ToolInput, ToolOutput, ToolConfig, registry
 
@@ -16,7 +16,7 @@ class JWTInput(ToolInput):
     """Input model for JWT decoding"""
     token: str = Field(description="JWT token to decode")
     
-    @validator('token')
+    @field_validator('token')
     def token_must_not_be_empty(cls, v):
         if not v or not v.strip():
             raise ValueError("JWT token cannot be empty")
