@@ -37,10 +37,5 @@ jobs:
           name: python-test-report-${{ matrix.python-version }}
           path: python-tools/test-report.xml
 
-      - name: Publish test report annotations
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: python-tests
-          path: python-tools/test-report.xml
-          fail-on-error: false
+      # Test-reporter annotations removed to avoid input validation issues in matrix runs.
+      # The JUnit XML report is still uploaded as an artifact for manual review.
