@@ -30,17 +30,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install and run Python tests via launcher
+      - name: Install and run Python tests (explicit)
         run: |
+          # Create and activate venv, install runtime + dev requirements
           python -m venv .venv
           source .venv/bin/activate
           pip install --upgrade pip
           pip install -r python-tools/requirements.txt
           pip install -r python-tools/requirements-dev.txt
-          chmod +x python-tools/run.sh || true
-          # Run pytest through the launcher but also produce junit xml for PR reporting
-          # pass pytest flags after the 'test' positional argument
-          ./python-tools/run.sh test -vv --junitxml=python-tools/test-report.xml
+          # Debugging info for runner
+          echo "Running tests with:" && python --version && which python
+          # Run pytest directly to avoid launcher argument forwarding issues
+          python -m pytest -q python-tools/tests --junitxml=python-tools/test-report.xml
 
       - name: Upload test report
         if: always()
