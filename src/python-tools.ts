@@ -16,7 +16,7 @@ function getPythonToolsPath(): string {
   const possiblePaths = [
     path.join(__dirname, "..", "assets", "devtools.py"),  // Bundled with extension
     path.join(__dirname, "..", "python-tools", "devtools.py"),  // Development
-    "/Users/shm/Documents/raycast/devtoolkit/python-tools/devtools.py"  // Absolute fallback
+    // Avoid hard-coded absolute paths; prefer bundled or workspace-relative dev copy
   ];
   
   for (const scriptPath of possiblePaths) {
