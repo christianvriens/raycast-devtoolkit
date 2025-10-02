@@ -5,7 +5,7 @@ Provides URL encoding and decoding functionality
 
 from urllib.parse import quote, unquote, urlparse
 from typing import Type, Literal
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 from core import BaseTool, ToolInput, ToolOutput, ToolConfig
 
 
@@ -17,15 +17,16 @@ class UrlInput(ToolInput):
         description="Operation to perform"
     )
     
-    @validator('text')
+    @field_validator('text', mode='before')
     def text_not_empty(cls, v):
         if not v.strip():
             raise ValueError("Text cannot be empty")
         return v
-    
-    @validator('text')
-    def validate_url_for_decode(cls, v, values):
+
+    @field_validator('text')
+    def validate_url_for_decode(cls, v, info):
         # If decoding, check if it looks like an encoded URL
+        values = info.data
         if values.get('operation') == 'decode':
             if '%' not in v:
                 raise ValueError("Text doesn't appear to be URL encoded (no % characters found)")

@@ -22,6 +22,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/python-tools/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install and run Python tests via launcher
         run: |
           python -m venv .venv
@@ -29,7 +37,8 @@ jobs:
           pip install --upgrade pip
           pip install -r python-tools/requirements.txt
           pip install -r python-tools/requirements-dev.txt
-          python-tools/run.sh test
+          chmod +x python-tools/run.sh || true
+          ./python-tools/run.sh test
 
   node-tests:
     name: Node / TypeScript tests
@@ -42,6 +51,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: |

@@ -5,7 +5,7 @@ Provides Base64 encoding and decoding functionality
 
 import base64
 from typing import Type, Literal
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 from core import BaseTool, ToolInput, ToolOutput, ToolConfig
 
 
@@ -17,7 +17,7 @@ class Base64Input(ToolInput):
         description="Operation to perform"
     )
     
-    @validator('text')
+    @field_validator('text')
     def text_not_empty(cls, v):
         if not v.strip():
             raise ValueError("Text cannot be empty")

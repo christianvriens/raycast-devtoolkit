@@ -5,7 +5,7 @@ Generates UUID v1 or v4 identifiers
 
 import uuid
 from typing import Type, List
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from core.base import BaseTool, ToolInput, ToolOutput, ToolConfig, registry
 
@@ -15,13 +15,13 @@ class UUIDInput(ToolInput):
     version: int = Field(default=4, description="UUID version (1 or 4)")
     count: int = Field(default=1, description="Number of UUIDs to generate")
     
-    @validator('version')
+    @field_validator('version')
     def version_must_be_valid(cls, v):
         if v not in [1, 4]:
             raise ValueError("UUID version must be 1 or 4")
         return v
-    
-    @validator('count')
+
+    @field_validator('count')
     def count_must_be_positive(cls, v):
         if v < 1 or v > 100:
             raise ValueError("Count must be between 1 and 100")
