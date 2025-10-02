@@ -39,7 +39,8 @@ jobs:
           pip install -r python-tools/requirements-dev.txt
           chmod +x python-tools/run.sh || true
           # Run pytest through the launcher but also produce junit xml for PR reporting
-          ./python-tools/run.sh test -- -vv --junitxml=python-tools/test-report.xml
+          # pass pytest flags after the 'test' positional argument
+          ./python-tools/run.sh test -vv --junitxml=python-tools/test-report.xml
 
       - name: Upload test report
         if: always()
