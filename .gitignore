@@ -45,3 +45,6 @@ compiled_raycast_rust
 
 # misc
 .DS_Store
+
+# Local Python virtualenv for python-tools
+python-tools/.venv/
