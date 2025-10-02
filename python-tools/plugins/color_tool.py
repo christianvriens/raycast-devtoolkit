@@ -58,7 +58,11 @@ class ColorTool(BaseTool):
             raise ValueError("Invalid hex color format")
         
         try:
-            return tuple(int(color[i:i+2], 16) for i in (0, 2, 4))
+            # Build a fixed-length 3-tuple so static type checkers know the size
+            r = int(color[0:2], 16)
+            g = int(color[2:4], 16)
+            b = int(color[4:6], 16)
+            return (r, g, b)
         except ValueError:
             raise ValueError("Invalid hex color values")
     
@@ -85,23 +89,28 @@ class ColorTool(BaseTool):
     
     def _rgb_to_hsl(self, r: int, g: int, b: int) -> Tuple[int, int, int]:
         """Convert RGB to HSL"""
-        r, g, b = r/255.0, g/255.0, b/255.0
-        max_val = max(r, g, b)
-        min_val = min(r, g, b)
-        h, s, l = 0, 0, (max_val + min_val) / 2
+        # Work in floats for the conversion; annotate locals to please the type checker
+        rf: float = r / 255.0
+        gf: float = g / 255.0
+        bf: float = b / 255.0
+        max_val = max(rf, gf, bf)
+        min_val = min(rf, gf, bf)
+        h: float = 0.0
+        s: float = 0.0
+        l: float = (max_val + min_val) / 2
         
         if max_val == min_val:
             h = s = 0  # achromatic
         else:
             d = max_val - min_val
             s = d / (2 - max_val - min_val) if l > 0.5 else d / (max_val + min_val)
-            
-            if max_val == r:
-                h = (g - b) / d + (6 if g < b else 0)
-            elif max_val == g:
-                h = (b - r) / d + 2
-            elif max_val == b:
-                h = (r - g) / d + 4
+
+            if max_val == rf:
+                h = (gf - bf) / d + (6 if gf < bf else 0)
+            elif max_val == gf:
+                h = (bf - rf) / d + 2
+            elif max_val == bf:
+                h = (rf - gf) / d + 4
             h /= 6
         
         return int(h * 360), int(s * 100), int(l * 100)
@@ -117,16 +126,17 @@ class ColorTool(BaseTool):
             return p
         
         if s == 0:
-            r = g = b = l  # achromatic
+            # l is a float between 0 and 1; use floats for intermediate values
+            rf = gf = bf = l  # achromatic
         else:
             q = l * (1 + s) if l < 0.5 else l + s - l * s
             p = 2 * l - q
-            h = h / 360
-            r = hue_to_rgb(p, q, h + 1/3)
-            g = hue_to_rgb(p, q, h)
-            b = hue_to_rgb(p, q, h - 1/3)
+            hf = h / 360.0
+            rf = hue_to_rgb(p, q, hf + 1/3)
+            gf = hue_to_rgb(p, q, hf)
+            bf = hue_to_rgb(p, q, hf - 1/3)
         
-        return int(r * 255), int(g * 255), int(b * 255)
+        return int(rf * 255), int(gf * 255), int(bf * 255)
     
     def execute(self, input_data: ColorInput) -> ColorOutput:
         """Convert color between formats"""

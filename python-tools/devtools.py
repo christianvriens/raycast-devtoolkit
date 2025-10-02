@@ -89,7 +89,7 @@ Examples:
     run_parser.add_argument('tool', help='Tool name')
     run_parser.add_argument('input', help='Input data as JSON string')
     
-        # Legacy commands
+    # Legacy commands
     legacy_parser = subparsers.add_parser('base64', help='Base64 encode/decode (legacy)')
     legacy_parser.add_argument('text', help='Text to encode/decode')
     legacy_parser.add_argument('--decode', action='store_true', help='Decode instead of encode')

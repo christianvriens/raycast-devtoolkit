@@ -28,4 +28,20 @@ jobs:
       - name: Run tests
         run: |
           source .venv/bin/activate
-          python -m pytest -q python-tools/tests
+          python -m pytest -q python-tools/tests --junitxml=python-tools/test-report.xml
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-test-report
+          path: python-tools/test-report.xml
+
+      - name: Publish test report annotations
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: python-tests
+          path: python-tools/test-report.xml
+          reporter: junit
+          fail-on-error: false

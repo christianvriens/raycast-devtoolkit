@@ -53,6 +53,21 @@ This lets you iterate on TypeScript plugins locally and use the bundled Python t
 - **[Python Tools](python-tools/README.md)** - Standalone Python usage
 - **[API Reference](docs/api/)** - Complete API documentation
 
+### Running tests and local development
+
+We recommend running the Python test-suite before making changes or opening a PR. The project provides a small launcher that creates an isolated venv under `python-tools/.venv`, installs requirements, and runs the CLI or tests.
+
+```bash
+# Make launcher executable
+chmod +x python-tools/run.sh
+
+# Create venv, install deps and run tests
+./python-tools/run.sh test
+
+# Run the CLI (creates venv if needed)
+./python-tools/run.sh list
+```
+
 ## 🏃‍♂️ Quick Examples
 
 ### Raycast Usage
@@ -60,22 +75,6 @@ This lets you iterate on TypeScript plugins locally and use the bundled Python t
 ⌘ Space → "base64" → Enter text → Auto-copied!
 ⌘ Space → "jwt" → Paste token → View decoded payload
 ⌘ Space → "hash" → Enter text → Get SHA256 hash
-```
-
-### Standalone Python
-```bash
-# List all tools
-python3 python-tools/devtools.py list
-
-# Encode Base64
-python3 python-tools/devtools.py base64 "hello world"
-
-# Decode JWT
-python3 python-tools/devtools.py jwt "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
-
-# Generate hash
-python3 python-tools/devtools.py hash "secret" --algorithm sha256
-```
 ```
 
 ### Standalone Python
