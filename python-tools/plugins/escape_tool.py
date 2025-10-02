@@ -65,7 +65,12 @@ class EscapeTool(BaseTool):
             else:
                 # Try to decode as a JSON string
                 try:
-                    out = _json.loads(f'"{text.replace('"', '\\"')}"')
+                    # Build a safe JSON string literal from the raw text by
+                    # escaping backslashes and double quotes, then parse it
+                    # with the JSON loader so escape sequences become actual
+                    # characters (e.g. \n -> newline).
+                    safe = text.replace('\\', '\\\\').replace('"', '\\"')
+                    out = _json.loads('"' + safe + '"')
                 except Exception:
                     # fallback: unescape common sequences
                     out = text.encode('utf-8').decode('unicode_escape')
