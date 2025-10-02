@@ -34,7 +34,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: python-test-report
+          name: python-test-report-${{ matrix.python-version }}
           path: python-tools/test-report.xml
 
       - name: Publish test report annotations
@@ -43,5 +43,4 @@ jobs:
         with:
           name: python-tests
           path: python-tools/test-report.xml
-          reporter: junit
           fail-on-error: false
