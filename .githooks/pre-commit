@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Running test-suite before commit..."
+
+# Prefer using the project launcher which creates an isolated venv
+if [ -x "./python-tools/run.sh" ]; then
+  ./python-tools/run.sh test || { echo "Tests failed. Aborting commit."; exit 1; }
+else
+  # Fallback: try pytest directly
+  if command -v pytest >/dev/null 2>&1; then
+    pytest -q python-tools/tests || { echo "Tests failed. Aborting commit."; exit 1; }
+  else
+    echo "ERROR: No test runner available (no ./python-tools/run.sh and pytest not installed)." >&2
+    echo "Please run tests manually before committing." >&2
+    exit 1
+  fi
+fi
+
+exit 0
