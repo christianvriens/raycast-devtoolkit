@@ -61,10 +61,58 @@ def execute_tool_command(tool_name: str, input_data: Dict[str, Any]) -> Dict[str
     except ValueError as e:
         raise ValueError(f"Tool '{tool_name}' not found. Available tools: {', '.join(registry.list_tools())}")
 
+
+class DevTools:
+    """Compatibility helper class used by tests and scripts.
+
+    Exposes convenience static methods that call the registry-backed tools.
+    """
+
+    @staticmethod
+    def epoch_converter(timestamp: str | None = None) -> Dict[str, Any]:
+        payload: Dict[str, Any] = {}
+        if timestamp is not None:
+            payload['timestamp'] = timestamp
+        return execute_tool_command('epoch', payload)
+
+    @staticmethod
+    def base64_converter(text: str, decode: bool = False) -> Dict[str, Any]:
+        return execute_tool_command('base64', {'text': text, 'operation': 'decode' if decode else 'encode'})
+
+    @staticmethod
+    def url_encoder(text: str, decode: bool = False) -> Dict[str, Any]:
+        return execute_tool_command('url', {'text': text, 'operation': 'decode' if decode else 'encode'})
+
+    @staticmethod
+    def hash_generator(text: str, algorithm: str = 'sha256') -> Dict[str, Any]:
+        return execute_tool_command('hash', {'text': text, 'algorithm': algorithm})
+
+    @staticmethod
+    def json_formatter(text: str, minify: bool = False) -> Dict[str, Any]:
+        # The JSONTool returns fields like 'formatted'; tests expect an 'output' key
+        result = execute_tool_command('json', {'text': text, 'minify': minify})
+        # Map 'formatted' to 'output' for backward compatibility
+        if 'formatted' in result and 'output' not in result:
+            result['output'] = result['formatted']
+        return result
+
+    @staticmethod
+    def uuid_generator(version: int = 4, count: int = 1) -> Dict[str, Any]:
+        return execute_tool_command('uuid', {'version': version, 'count': count})
+
+    @staticmethod
+    def color_converter(color: str, fmt: str | None = None) -> Dict[str, Any]:
+        # fmt is accepted for compatibility but not required by the tool
+        return execute_tool_command('color', {'color': color})
+
+    @staticmethod
+    def jwt_decoder(token: str) -> Dict[str, Any]:
+        return execute_tool_command('jwt', {'token': token})
+
 def main():
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(
-        description="DevToolkit - Plugin-based developer utilities",
+        description="DevToolkit Python Helpers",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
